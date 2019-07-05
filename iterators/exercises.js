@@ -123,3 +123,58 @@ const helloWorld = new Words("Hello World");
 for (word of helloWorld) {
   console.log(word);
 } // -> should log 'Hello' and 'World'
+
+// CHALLENGE 7
+function valueAndPrevIndex(array) {
+  let i = 0;
+  const inner = {
+    sentence: () => {
+      const prevIndex =
+        i === 0
+          ? `${array[i]} is the first index`
+          : `${array[i]} was found after index ${i - 1}`;
+      const element = prevIndex;
+      i++;
+      return element;
+    }
+  };
+  return inner;
+}
+
+const returnedSentence = valueAndPrevIndex([4, 5, 6]);
+console.log(returnedSentence.sentence());
+console.log(returnedSentence.sentence());
+console.log(returnedSentence.sentence());
+
+// CHALLENGE 8
+function* createConversation(string) {
+  if (string === "english") {
+    function printHello() {
+      console.log("hello there");
+    }
+    global.setInterval(printHello, 3000);
+  } else {
+    function printGibberish() {
+      console.log("gibberish");
+    }
+    global.setInterval(printGibberish, 3000);
+  }
+}
+
+console.log(createConversation("sda").next());
+
+//CHALLENGE 9
+function waitForVerb(noun) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(`${noun} runs`);
+    }, 3000);
+  });
+}
+
+async function f(noun) {
+  const result = await waitForVerb(noun);
+  console.log(result);
+}
+
+f("dog");
