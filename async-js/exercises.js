@@ -48,3 +48,47 @@ function delay() {
 }
 
 delay().then(sayHello);
+
+// Challenge 6
+const secondPromise = new Promise((resolve, reject) => {
+  resolve("Second!");
+});
+const firstPromise = new Promise((resolve, reject) => {
+  resolve(secondPromise);
+});
+
+firstPromise.then(value => console.log(value));
+
+// Challenge 7
+const fakePeople = [
+  { name: "Rudolph", hasPets: false, currentTemp: 98.6 },
+  { name: "Zebulon", hasPets: true, currentTemp: 22.6 },
+  { name: "Harold", hasPets: true, currentTemp: 98.3 }
+];
+
+const fakeAPICall = i => {
+  const returnTime = Math.floor(Math.random() * 1000);
+  return new Promise((resolve, reject) => {
+    if (i >= 0 && i < fakePeople.length) {
+      setTimeout(() => resolve(fakePeople[i]), returnTime);
+    } else {
+      reject({ message: "index out of range" });
+    }
+  });
+};
+
+function getAllData() {
+  let result = [];
+  for (let i = 0; i < fakePeople.length; i++) {
+    result.push(fakeAPICall(i));
+  }
+  return Promise.all(result)
+    .then(values => {
+      return values;
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+getAllData().then(values => console.log(values));
